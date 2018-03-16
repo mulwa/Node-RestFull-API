@@ -7,6 +7,18 @@ const userRoutes = require('./api/routes/Users');
 app.use(bodyParser.urlencoded({ extended:false}));
 app.use(bodyParser.json());
 
+// handling CORS Cross Origin Reource Sharing
+app.use((req,res,next)=>{
+    res.header('Access-Control-Allow-Origin','*');
+    res.header('Access-Control-Allow-Headers','*');
+
+    if(res.method ==='OPTIONS'){
+        res.header('Access-Control-Allow-Methods','PUT,GET,POST,DELETE,PATCH');
+        return res.status(200).json({});
+    }
+    next();
+});
+
 app.use('/user',userRoutes);
 // handling  error for wrong endpoint
 app.use((req,res,next)=>{
